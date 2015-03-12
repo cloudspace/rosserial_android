@@ -1,0 +1,24 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="org.ros.android.android_honeycomb_mr2">
+  <uses-sdk android:minSdkVersion="13"/>
+
+  <!-- 
+    You shouldn't need an application tag for a library, but this is a 
+    workaround to get past a gradle android plugin bug in 0.4.
+    
+    It should disappear in 0.5
+  -->
+  <application>
+        <activity android:label="@string/app_name" android:launchMode="singleTask" android:name="org.ros.android.android_gingerbread_mr1.MasterChooser"/>
+
+        <service android:name="org.ros.android.NodeMainExecutorService">
+            <intent-filter>
+                <action android:name="org.ros.android.NodeMainExecutorService"/>
+            </intent-filter>
+        </service>
+    </application>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+</manifest>
