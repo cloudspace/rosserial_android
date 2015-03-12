@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<issues format="4" by="lint 24.0.2">
+<issues format="4" by="lint 24.1.2">
 
     <issue
         id="InvalidPackage"
@@ -66,100 +66,24 @@ This check scans through library jars and looks for references to API packages t
     </issue>
 
     <issue
-        id="GradleDynamicVersion"
+        id="OldTargetApi"
         severity="Warning"
-        message="Avoid using + in version numbers; can lead to unpredictable and unrepeatable builds (org.ros.android_core:android_acm_serial:0.1.+)"
+        message="Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the android.os.Build.VERSION_CODES javadoc for details."
         category="Correctness"
-        priority="4"
-        summary="Gradle Dynamic Version"
-        explanation="Using `+` in dependencies lets you automatically pick up the latest available version rather than a specific, named version. However, this is not recommended; your builds are not repeatable; you may have tested with a slightly different version than what the build server used. (Using a dynamic version as the major version number is more problematic than using it in the minor version position.)"
-        errorLine1="    compile(&apos;org.ros.android_core:android_acm_serial:0.1.+&apos;) {"
-        errorLine2="    ^"
+        priority="6"
+        summary="Target SDK attribute is not targeting latest version"
+        explanation="When your application runs on a version of Android that is more recent than your `targetSdkVersion` specifies that it has been tested with, various compatibility modes kick in. This ensures that your application continues to work, but it may look out of place. For example, if the `targetSdkVersion` is less than 14, your app may get an option button in the UI.
+
+To fix this issue, set the `targetSdkVersion` to the highest available value. Then test your app to make sure everything works correctly. You may want to consult the compatibility notes to see what changes apply to each version you are adding support for: http://developer.android.com/reference/android/os/Build.VERSION_CODES.html"
+        url="http://developer.android.com/reference/android/os/Build.VERSION_CODES.html"
+        urls="http://developer.android.com/reference/android/os/Build.VERSION_CODES.html"
+        errorLine1="        targetSdkVersion 21"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~"
         quickfix="studio">
         <location
-            file="/Users/FutureHax/Dropbox/Android/AndroidStudioProjects/ArdrobotAndroid/Resources/rosserial_java/rosserial_java/library/build.gradle"
-            line="36"
-            column="5"/>
-    </issue>
-
-    <issue
-        id="UseSparseArrays"
-        severity="Warning"
-        message="Use `new SparseArray&lt;TopicInfo>(...)` instead for better performance"
-        category="Performance"
-        priority="4"
-        summary="HashMap can be replaced with SparseArray"
-        explanation="For maps where the keys are of type integer, it&apos;s typically more efficient to use the Android `SparseArray` API. This check identifies scenarios where you might want to consider using `SparseArray` instead of `HashMap` for better performance.
-
-This is *particularly* useful when the value types are primitives like ints, where you can use `SparseIntArray` and avoid auto-boxing the values from `int` to `Integer`.
-
-If you need to construct a `HashMap` because you need to call an API outside of your control which requires a `Map`, you can suppress this warning using for example the `@SuppressLint` annotation."
-        errorLine1="    private Map&lt;Integer, TopicInfo> id_to_topic = new HashMap&lt;Integer, TopicInfo>();"
-        errorLine2="                                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="/Users/FutureHax/Dropbox/Android/AndroidStudioProjects/ArdrobotAndroid/Resources/rosserial_java/rosserial_java/library/src/main/java/com/cloudspace/rosserial/Protocol.java"
-            line="80"
-            column="51"/>
-    </issue>
-
-    <issue
-        id="UseSparseArrays"
-        severity="Warning"
-        message="Use `new SparseArray&lt;Publisher>(...)` instead for better performance"
-        category="Performance"
-        priority="4"
-        summary="HashMap can be replaced with SparseArray"
-        explanation="For maps where the keys are of type integer, it&apos;s typically more efficient to use the Android `SparseArray` API. This check identifies scenarios where you might want to consider using `SparseArray` instead of `HashMap` for better performance.
-
-This is *particularly* useful when the value types are primitives like ints, where you can use `SparseIntArray` and avoid auto-boxing the values from `int` to `Integer`.
-
-If you need to construct a `HashMap` because you need to call an API outside of your control which requires a `Map`, you can suppress this warning using for example the `@SuppressLint` annotation."
-        errorLine1="    private Map&lt;Integer, Publisher> publishers = new HashMap&lt;Integer, Publisher>();"
-        errorLine2="                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="/Users/FutureHax/Dropbox/Android/AndroidStudioProjects/ArdrobotAndroid/Resources/rosserial_java/rosserial_java/library/src/main/java/com/cloudspace/rosserial/Protocol.java"
-            line="90"
-            column="50"/>
-    </issue>
-
-    <issue
-        id="UseSparseArrays"
-        severity="Warning"
-        message="Use `new SparseArray&lt;Subscriber>(...)` instead for better performance"
-        category="Performance"
-        priority="4"
-        summary="HashMap can be replaced with SparseArray"
-        explanation="For maps where the keys are of type integer, it&apos;s typically more efficient to use the Android `SparseArray` API. This check identifies scenarios where you might want to consider using `SparseArray` instead of `HashMap` for better performance.
-
-This is *particularly* useful when the value types are primitives like ints, where you can use `SparseIntArray` and avoid auto-boxing the values from `int` to `Integer`.
-
-If you need to construct a `HashMap` because you need to call an API outside of your control which requires a `Map`, you can suppress this warning using for example the `@SuppressLint` annotation."
-        errorLine1="    private Map&lt;Integer, Subscriber> subscribers = new HashMap&lt;Integer, Subscriber>();"
-        errorLine2="                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="/Users/FutureHax/Dropbox/Android/AndroidStudioProjects/ArdrobotAndroid/Resources/rosserial_java/rosserial_java/library/src/main/java/com/cloudspace/rosserial/Protocol.java"
-            line="95"
-            column="52"/>
-    </issue>
-
-    <issue
-        id="UseSparseArrays"
-        severity="Warning"
-        message="Use `new SparseArray&lt;MessageDeserializer>(...)` instead for better performance"
-        category="Performance"
-        priority="4"
-        summary="HashMap can be replaced with SparseArray"
-        explanation="For maps where the keys are of type integer, it&apos;s typically more efficient to use the Android `SparseArray` API. This check identifies scenarios where you might want to consider using `SparseArray` instead of `HashMap` for better performance.
-
-This is *particularly* useful when the value types are primitives like ints, where you can use `SparseIntArray` and avoid auto-boxing the values from `int` to `Integer`.
-
-If you need to construct a `HashMap` because you need to call an API outside of your control which requires a `Map`, you can suppress this warning using for example the `@SuppressLint` annotation."
-        errorLine1="    private Map&lt;Integer, MessageDeserializer> msg_deserializers = new HashMap&lt;Integer, MessageDeserializer>();"
-        errorLine2="                                                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="/Users/FutureHax/Dropbox/Android/AndroidStudioProjects/ArdrobotAndroid/Resources/rosserial_java/rosserial_java/library/src/main/java/com/cloudspace/rosserial/Protocol.java"
-            line="100"
-            column="67"/>
+            file="/Users/FutureHax/Dropbox/Android/AndroidStudioProjects/ArdrobotAndroid/Resources/rosserial_android/rosserial_android_module/build.gradle"
+            line="9"
+            column="9"/>
     </issue>
 
 </issues>

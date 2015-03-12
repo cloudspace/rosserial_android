@@ -18,8 +18,8 @@ document.getElementById(id+'Link').style.display = 'none';
 <body>
 <h1>Lint Report</h1>
 <div class="titleSeparator"></div>
-Check performed at Thu Mar 12 10:22:44 EDT 2015.<br/>
-4 errors and 5 warnings found:<br/><br/>
+Check performed at Thu Mar 12 12:27:56 EDT 2015.<br/>
+4 errors and 1 warnings found:<br/><br/>
 <table class="overview">
 <tr><td></td><td class="categoryColumn"><a href="#Correctness">Correctness</a>
 </td></tr>
@@ -29,13 +29,7 @@ Check performed at Thu Mar 12 10:22:44 EDT 2015.<br/>
 </td></tr>
 <tr>
 <td class="countColumn">1</td><td class="issueColumn"><img border="0" align="top" src="lint-results_files/lint-warning.png" alt="Warning" />
-<a href="#GradleDynamicVersion">GradleDynamicVersion: Gradle Dynamic Version</a>
-</td></tr>
-<tr><td></td><td class="categoryColumn"><a href="#Performance">Performance</a>
-</td></tr>
-<tr>
-<td class="countColumn">4</td><td class="issueColumn"><img border="0" align="top" src="lint-results_files/lint-warning.png" alt="Warning" />
-<a href="#UseSparseArrays">UseSparseArrays: HashMap can be replaced with SparseArray</a>
+<a href="#OldTargetApi">OldTargetApi: Target SDK attribute is not targeting latest version</a>
 </td></tr>
 <tr><td></td><td class="categoryColumn"><a href="#MissingIssues">Disabled Checks (11)</a>
 </td></tr></table>
@@ -48,10 +42,10 @@ Check performed at Thu Mar 12 10:22:44 EDT 2015.<br/>
 <div class="id"><a href="#" title="Return to top">InvalidPackage: Package not included in Android</a><div class="issueSeparator"></div>
 </div>
 <div class="warningslist">
-<span class="location"><a href="../../../../../../../../../../.gradle/caches/modules-2/files-2.1/org.ros.rosjava_core/apache_xmlrpc_common/0.1.6/5844c027dd3e8b61aa5885a5748f6560a8fe10e/apache_xmlrpc_common-0.1.6.jar">../../../../../../../../../../.gradle/caches/modules-2/files-2.1/org.ros.rosjava_core/apache_xmlrpc_common/0.1.6/5844c027dd3e8b61aa5885a5748f6560a8fe10e/apache_xmlrpc_common-0.1.6.jar</a></span>: <span class="message">Invalid package reference in library; not included in Android: <code>javax.xml.bind</code>. Referenced from <code>org.apache.xmlrpc.jaxb.JaxbParser</code>.</span><br />
-<span class="location"><a href="../../../../../../../../../../.gradle/caches/modules-2/files-2.1/io.netty/netty/3.5.2.Final/e6fb74a0699abe108969b2ec1f269391169a0426/netty-3.5.2.Final.jar">../../../../../../../../../../.gradle/caches/modules-2/files-2.1/io.netty/netty/3.5.2.Final/e6fb74a0699abe108969b2ec1f269391169a0426/netty-3.5.2.Final.jar</a></span>: <span class="message">Invalid package reference in library; not included in Android: <code>javax.servlet.http</code>. Referenced from <code>org.jboss.netty.channel.socket.http.HttpTunnelingServlet</code>.</span><br />
-<span class="location"><a href="../../../../../../../../../../.gradle/caches/modules-2/files-2.1/io.netty/netty/3.5.2.Final/e6fb74a0699abe108969b2ec1f269391169a0426/netty-3.5.2.Final.jar">../../../../../../../../../../.gradle/caches/modules-2/files-2.1/io.netty/netty/3.5.2.Final/e6fb74a0699abe108969b2ec1f269391169a0426/netty-3.5.2.Final.jar</a></span>: <span class="message">Invalid package reference in library; not included in Android: <code>javax.servlet</code>. Referenced from <code>org.jboss.netty.channel.socket.http.HttpTunnelingServlet</code>.</span><br />
-<span class="location"><a href="../../../../../../../../../../.gradle/caches/modules-2/files-2.1/org.ros.rosjava_core/rosjava/0.1.6/6be35df9adf081d5c20ffcb9e07653edbebcc969/rosjava-0.1.6.jar">../../../../../../../../../../.gradle/caches/modules-2/files-2.1/org.ros.rosjava_core/rosjava/0.1.6/6be35df9adf081d5c20ffcb9e07653edbebcc969/rosjava-0.1.6.jar</a></span>: <span class="message">Invalid package reference in library; not included in Android: <code>java.lang.management</code>. Referenced from <code>org.ros.internal.system.Process</code>.</span><br />
+<span class="location"><a href="../../../../../../../../../.gradle/caches/modules-2/files-2.1/org.ros.rosjava_core/apache_xmlrpc_common/0.1.6/5844c027dd3e8b61aa5885a5748f6560a8fe10e/apache_xmlrpc_common-0.1.6.jar">../../../../../../../../../.gradle/caches/modules-2/files-2.1/org.ros.rosjava_core/apache_xmlrpc_common/0.1.6/5844c027dd3e8b61aa5885a5748f6560a8fe10e/apache_xmlrpc_common-0.1.6.jar</a></span>: <span class="message">Invalid package reference in library; not included in Android: <code>javax.xml.bind</code>. Referenced from <code>org.apache.xmlrpc.jaxb.JaxbParser</code>.</span><br />
+<span class="location"><a href="../../../../../../../../../.gradle/caches/modules-2/files-2.1/io.netty/netty/3.5.2.Final/e6fb74a0699abe108969b2ec1f269391169a0426/netty-3.5.2.Final.jar">../../../../../../../../../.gradle/caches/modules-2/files-2.1/io.netty/netty/3.5.2.Final/e6fb74a0699abe108969b2ec1f269391169a0426/netty-3.5.2.Final.jar</a></span>: <span class="message">Invalid package reference in library; not included in Android: <code>javax.servlet.http</code>. Referenced from <code>org.jboss.netty.channel.socket.http.HttpTunnelingServlet</code>.</span><br />
+<span class="location"><a href="../../../../../../../../../.gradle/caches/modules-2/files-2.1/io.netty/netty/3.5.2.Final/e6fb74a0699abe108969b2ec1f269391169a0426/netty-3.5.2.Final.jar">../../../../../../../../../.gradle/caches/modules-2/files-2.1/io.netty/netty/3.5.2.Final/e6fb74a0699abe108969b2ec1f269391169a0426/netty-3.5.2.Final.jar</a></span>: <span class="message">Invalid package reference in library; not included in Android: <code>javax.servlet</code>. Referenced from <code>org.jboss.netty.channel.socket.http.HttpTunnelingServlet</code>.</span><br />
+<span class="location"><a href="../../../../../../../../../.gradle/caches/modules-2/files-2.1/org.ros.rosjava_core/rosjava/0.1.6/6be35df9adf081d5c20ffcb9e07653edbebcc969/rosjava-0.1.6.jar">../../../../../../../../../.gradle/caches/modules-2/files-2.1/org.ros.rosjava_core/rosjava/0.1.6/6be35df9adf081d5c20ffcb9e07653edbebcc969/rosjava-0.1.6.jar</a></span>: <span class="message">Invalid package reference in library; not included in Android: <code>java.lang.management</code>. Referenced from <code>org.ros.internal.system.Process</code>.</span><br />
 </div>
 <div class="metadata">Priority: 6 / 10<br/>
 Category: Correctness</div>
@@ -66,85 +60,33 @@ This check scans through library jars and looks for references to API packages t
 </div>
 <br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "InvalidPackage" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
 </div>
-<a name="GradleDynamicVersion"></a>
+<a name="OldTargetApi"></a>
 <div class="issue">
-<div class="id"><a href="#" title="Return to top">GradleDynamicVersion: Gradle Dynamic Version</a><div class="issueSeparator"></div>
+<div class="id"><a href="#" title="Return to top">OldTargetApi: Target SDK attribute is not targeting latest version</a><div class="issueSeparator"></div>
 </div>
 <div class="warningslist">
-<span class="location"><a href="../../build.gradle">../../build.gradle</a>:36</span>: <span class="message">Avoid using + in version numbers; can lead to unpredictable and unrepeatable builds (org.ros.android_core:android_acm_serial:0.1.+)</span><br /><pre class="errorlines">
-<span class="lineno">  33</span>         exclude group: 'junit'
-<span class="lineno">  34</span>         exclude group: 'xml-apis'
-<span class="lineno">  35</span>     }
-<span class="lineno">  36</span>     <span class="errorspan">compile('org.ros.android_core:android_acm_serial:0.1.+') {</span>
-<span class="lineno">  37</span>         exclude group: 'junit'
-<span class="lineno">  38</span>         exclude group: 'xml-apis'
+<span class="location"><a href="../../build.gradle">../../build.gradle</a>:9</span>: <span class="message">Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the android.os.Build.VERSION_CODES javadoc for details.</span><br /><pre class="errorlines">
+<span class="lineno">   6</span> 
+<span class="lineno">   7</span>     defaultConfig {
+<span class="lineno">   8</span>         minSdkVersion 16
+<span class="lineno">   9</span>         <span class="errorspan">targetSdkVersion 21</span>
+<span class="lineno">  10</span>         versionCode 1
+<span class="lineno">  11</span>         versionName "1.0"
 </pre>
 </div>
 <div class="metadata">Note: This issue has an associated quickfix operation in Android Studio/IntelliJ&nbsp;<img alt="Fix" border="0" align="top" src="lint-results_files/lint-run.png" />
 <br>
-Priority: 4 / 10<br/>
+Priority: 6 / 10<br/>
 Category: Correctness</div>
 Severity: <span class="warning">Warning</span><div class="summary">
-Explanation: Gradle Dynamic Version.</div>
+Explanation: Target SDK attribute is not targeting latest version.</div>
 <div class="explanation">
-Using <code>+</code> in dependencies lets you automatically pick up the latest available version rather than a specific, named version. However, this is not recommended; your builds are not repeatable; you may have tested with a slightly different version than what the build server used. (Using a dynamic version as the major version number is more problematic than using it in the minor version position.)
-</div>
-<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "GradleDynamicVersion" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
-</div>
-
-<a name="Performance"></a>
-<div class="category"><a href="#" title="Return to top">Performance</a><div class="categorySeparator"></div>
-</div>
-<a name="UseSparseArrays"></a>
-<div class="issue">
-<div class="id"><a href="#" title="Return to top">UseSparseArrays: HashMap can be replaced with SparseArray</a><div class="issueSeparator"></div>
-</div>
-<div class="warningslist">
-<span class="location"><a href="../../src/main/java/com/cloudspace/rosserial/Protocol.java">../../src/main/java/com/cloudspace/rosserial/Protocol.java</a>:80</span>: <span class="message">Use <code>new SparseArray&lt;TopicInfo>(...)</code> instead for better performance</span><br /><pre class="errorlines">
-<span class="lineno">  77</span>     /**
-<span class="lineno">  78</span>      * Map of IDs being sent down the channel to the topics they represent.
-<span class="lineno">  79</span>      */
-<span class="lineno">  80</span>     private Map&lt;Integer, TopicInfo> id_to_topic = <span class="errorspan">new HashMap&lt;Integer, TopicInfo>();</span>
-<span class="lineno">  81</span> 
-<span class="lineno">  82</span>     /**
-</pre>
-<span class="location"><a href="../../src/main/java/com/cloudspace/rosserial/Protocol.java">../../src/main/java/com/cloudspace/rosserial/Protocol.java</a>:90</span>: <span class="message">Use <code>new SparseArray&lt;Publisher>(...)</code> instead for better performance</span><br /><pre class="errorlines">
-<span class="lineno">  87</span>     /**
-<span class="lineno">  88</span>      * Topic ID to publisher.
-<span class="lineno">  89</span>      */
-<span class="lineno">  90</span>     private Map&lt;Integer, Publisher> publishers = <span class="errorspan">new HashMap&lt;Integer, Publisher>();</span>
-<span class="lineno">  91</span> 
-<span class="lineno">  92</span>     /**
-</pre>
-<span class="location"><a href="../../src/main/java/com/cloudspace/rosserial/Protocol.java">../../src/main/java/com/cloudspace/rosserial/Protocol.java</a>:95</span>: <span class="message">Use <code>new SparseArray&lt;Subscriber>(...)</code> instead for better performance</span><br /><pre class="errorlines">
-<span class="lineno">  92</span>     /**
-<span class="lineno">  93</span>      * Topic ID to subscriber.
-<span class="lineno">  94</span>      */
-<span class="lineno">  95</span>     private Map&lt;Integer, Subscriber> subscribers = <span class="errorspan">new HashMap&lt;Integer, Subscriber>();</span>
-<span class="lineno">  96</span> 
-<span class="lineno">  97</span>     /**
-</pre>
-<span class="location"><a href="../../src/main/java/com/cloudspace/rosserial/Protocol.java">../../src/main/java/com/cloudspace/rosserial/Protocol.java</a>:100</span>: <span class="message">Use <code>new SparseArray&lt;MessageDeserializer>(...)</code> instead for better performance</span><br /><pre class="errorlines">
-<span class="lineno">  97</span>     /**
-<span class="lineno">  98</span>      * Topic ID to message deserializer for the associated topic message.
-<span class="lineno">  99</span>      */
-<span class="lineno"> 100</span>     private Map&lt;Integer, MessageDeserializer> msg_deserializers = <span class="errorspan">new HashMap&lt;Integer, MessageDeserializer>();</span>
-<span class="lineno"> 101</span> 
-<span class="lineno"> 102</span>     /**
-</pre>
-</div>
-<div class="metadata">Priority: 4 / 10<br/>
-Category: Performance</div>
-Severity: <span class="warning">Warning</span><div class="summary">
-Explanation: HashMap can be replaced with SparseArray.</div>
-<div class="explanation">
-For maps where the keys are of type integer, it's typically more efficient to use the Android <code>SparseArray</code> API. This check identifies scenarios where you might want to consider using <code>SparseArray</code> instead of <code>HashMap</code> for better performance.<br/>
+When your application runs on a version of Android that is more recent than your <code>targetSdkVersion</code> specifies that it has been tested with, various compatibility modes kick in. This ensures that your application continues to work, but it may look out of place. For example, if the <code>targetSdkVersion</code> is less than 14, your app may get an option button in the UI.<br/>
 <br/>
-This is <b>particularly</b> useful when the value types are primitives like ints, where you can use <code>SparseIntArray</code> and avoid auto-boxing the values from <code>int</code> to <code>Integer</code>.<br/>
-<br/>
-If you need to construct a <code>HashMap</code> because you need to call an API outside of your control which requires a <code>Map</code>, you can suppress this warning using for example the <code>@SuppressLint</code> annotation.
+To fix this issue, set the <code>targetSdkVersion</code> to the highest available value. Then test your app to make sure everything works correctly. You may want to consult the compatibility notes to see what changes apply to each version you are adding support for: <a href="http://developer.android.com/reference/android/os/Build.VERSION_CODES.html">http://developer.android.com/reference/android/os/Build.VERSION_CODES.html</a>
 </div>
-<br/><div class="moreinfo">More info: </div><br/>To suppress this error, use the issue id "UseSparseArrays" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
+<br/><div class="moreinfo">More info: <a href="http://developer.android.com/reference/android/os/Build.VERSION_CODES.html">http://developer.android.com/reference/android/os/Build.VERSION_CODES.html</a>
+</div><br/>To suppress this error, use the issue id "OldTargetApi" as explained in the <a href="#SuppressInfo">Suppressing Warnings and Errors</a> section.<br/>
 </div>
 
 <a name="MissingIssues"></a>

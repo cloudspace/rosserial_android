@@ -1,2 +1,1 @@
-include ':rosserial_android_module', ':rosserial_java_module'
-project(':rosserial_java_module').projectDir = new File('Resources/rosserial_java/rosserial_java_module')
+include ':rosserial_android_module', ':Resources/rosserial_java/rosserial_java_module'
