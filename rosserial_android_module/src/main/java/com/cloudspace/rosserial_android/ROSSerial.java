@@ -135,25 +135,31 @@ public class ROSSerial implements Runnable {
      * Packet handler for writing to the other endpoint.
      */
     private Protocol.PacketHandler sendHandler = new Protocol.PacketHandler() {
+        long lastPacketTransmittedAt = -1;
 
         @Override
         public void send(byte[] data, int topicId) {
-            byte[] packet = generatePacket(data, topicId);
-            Log.d("SENDING PACKET @ " + packet.length, BinaryUtils.byteArrayToHexString(packet));
-            try {
-                ostream.write(packet);
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (lastPacketTransmittedAt == -1 || System.currentTimeMillis() - 1 > lastPacketTransmittedAt) {
+                lastPacketTransmittedAt = System.currentTimeMillis();
+                byte[] packet = generatePacket(data, topicId);
+                Log.d("SENDING PACKET @ " + packet.length, BinaryUtils.byteArrayToHexString(packet));
+                try {
+                    ostream.write(packet);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                Log.d("IGNORING SEND", "Too many calls");
             }
         }
     };
 
     private byte[] generatePacket(byte[] data, int topicId) {
-        int length = data.length;            
+        int length = data.length;
         byte tHigh = (byte) ((topicId & 0xFF00) >> 8);
         byte tLow = (byte) (topicId & 0xFF);
         int dataValues = 0;
-             
+
         dataValues += tLow;
         dataValues += tHigh;
         for (int i = 0; i < data.length; i++) {
@@ -165,7 +171,7 @@ public class ROSSerial implements Runnable {
 
         byte lengthChk = (byte) (255 - length % 256);
         byte dataChk = (byte) (255 - dataValues % 256);
-               
+
         byte[] almost = new byte[]{FLAGS[0], FLAGS[1], lLow, lHigh, lengthChk, tLow, tHigh};
 
         byte[] result = new byte[almost.length + data.length + 1];
@@ -229,15 +235,9 @@ public class ROSSerial implements Runnable {
                         resetPacket();
                     }
                 } catch (IOException e) {
-                    node.getLog().error("Unable to read input stream", e);
-                    System.out.println("Unable to read input stream");
-
-                    if (e.toString().equals("java.io.IOException: No such device")) {
-                        node.getLog()
-                                .error("Total IO Failure.  Now exiting ROSSerial iothread.");
-                        break;
-                    }
-                    resetPacket();
+                    node.getLog()
+                            .error("Total IO Failure.  Now exiting ROSSerial iothread.");
+                    break;
                 } catch (Exception e) {
                     node.getLog().error("Unable to read input stream", e);
                 }
@@ -257,6 +257,7 @@ public class ROSSerial implements Runnable {
      * ! reset parsing statemachine
      */
     private void resetPacket() {
+        Log.d("ROSSerial", "RESTING PACKET");
         byte_index = 0;
         data_len = 0;
         messageLengthBytes = new byte[2];
@@ -298,11 +299,11 @@ public class ROSSerial implements Runnable {
                 data_len = (messageLengthBytes[1] << 8) | (messageLengthBytes[0]);
                 int dataChk = 255 - data_len % 256;
                 if ((byte) dataChk == b) {
-                    Log.d("Checksum succeeded!", BinaryUtils.byteToHexString(b));
+                    Log.d("Length chk succeeded!", BinaryUtils.byteToHexString(b));
                     packet_state = PACKET_STATE.TOPIC_ID;
                     byte_index = 0;
                 } else {
-                    Log.d("Checksum failed!", BinaryUtils.byteToHexString(b) + " : " + String.valueOf(dataChk));
+                    Log.d("Length chk failed!", BinaryUtils.byteToHexString(b) + " : " + String.valueOf(dataChk));
                     resetPacket();
                 }
                 break;
@@ -331,11 +332,11 @@ public class ROSSerial implements Runnable {
 
                 if ((byte) chk == b) {
                     resetPacket();
-                    Log.d("Checksum failed!", BinaryUtils.byteToHexString(b) + " : " + String.valueOf(chk));
+                    Log.d("Msg checksum failed!", BinaryUtils.byteToHexString(b) + " : " + String.valueOf(chk));
                     resetPacket();
                     return false;
                 } else {
-                    Log.d("Checksum succeeded!", BinaryUtils.byteToHexString(b));
+                    Log.d("Msg checksum succeeded!", BinaryUtils.byteToHexString(b));
                 }
 
                 int topic_id = (topicIdBytes[1] << 8) | (topicIdBytes[0]);

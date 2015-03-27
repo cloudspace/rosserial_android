@@ -23,7 +23,7 @@ public class ROSSerialADK {
     static final String TAG = "ROSSerialADK";
 
 
-    private com.cloudspace.rosserial_java.ROSSerial rosserial;
+    private ROSSerial rosserial;
     Thread ioThread;
 
 
@@ -36,12 +36,12 @@ public class ROSSerialADK {
     FileInputStream mInputStream;
     FileOutputStream mOutputStream;
     ParcelFileDescriptor mFileDescriptor;
-    
+
     private ConnectedNode node;
 
 
     public interface onConnectionListener {
-        public void trigger(boolean connection);
+        void trigger(boolean connection);
     }
 
     private onConnectionListener connectionCB;
@@ -59,25 +59,24 @@ public class ROSSerialADK {
         openAccessory(accessory);
     }
 
-    public ROSSerialADK(Context context, ConnectedNode node, UsbAccessory accessory, ParcelFileDescriptor fileDescriptor, FileInputStream input, FileOutputStream output) {
-
-        this.node = node;
-        this.mContext = context;
-        mUsbManager = (UsbManager) mContext.getSystemService(Context.USB_SERVICE);
-        mFileDescriptor = fileDescriptor;
-        mInputStream = input;
-        mOutputStream = output;
-        mAccessory = accessory;
-        
-        rosserial = new com.cloudspace.rosserial_java.ROSSerial(node, mInputStream, mOutputStream);
-        ioThread = new Thread(null, rosserial, "ROSSerialADK");
-        ioThread.setContextClassLoader(ROSSerialADK.class.getClassLoader());
-        ioThread.start();
-
-        if (connectionCB != null) connectionCB.trigger(true);
-        Toast.makeText(mContext, "accessory opened", Toast.LENGTH_LONG).show();
-                
-    }
+//    public ROSSerialADK(Context context, ConnectedNode node, UsbAccessory accessory, FileInputStream input, FileOutputStream output) {
+//
+//        this.node = node;
+//        this.mContext = context;
+//        mUsbManager = (UsbManager) mContext.getSystemService(Context.USB_SERVICE);
+//        mInputStream = input;
+//        mOutputStream = output;
+//        mAccessory = accessory;
+//
+//        rosserial = new ROSSerial(node, mInputStream, mOutputStream);
+//        ioThread = new Thread(null, rosserial, "ROSSerialADK");
+//        ioThread.setContextClassLoader(ROSSerialADK.class.getClassLoader());
+//        ioThread.start();
+//
+//        if (connectionCB != null) connectionCB.trigger(true);
+//        Toast.makeText(mContext, "accessory opened", Toast.LENGTH_LONG).show();
+//
+//    }
 
            
     private boolean openAccessory(UsbAccessory accessory) {
@@ -91,7 +90,7 @@ public class ROSSerialADK {
             mInputStream = new FileInputStream(mFileDescriptor.getFileDescriptor());
             mOutputStream = new FileOutputStream(mFileDescriptor.getFileDescriptor());
 
-            rosserial = new com.cloudspace.rosserial_java.ROSSerial(node, mInputStream, mOutputStream);
+            rosserial = new ROSSerial(node, mInputStream, mOutputStream);
             ioThread = new Thread(null, rosserial, "ROSSerialADK");
             ioThread.setContextClassLoader(ROSSerialADK.class.getClassLoader());
             ioThread.start();
