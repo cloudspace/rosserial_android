@@ -33,6 +33,7 @@
 // http://wiki.ros.org/rosserial/Overview/Protocol
 package com.cloudspace.rosserial_android;
 
+import android.os.Handler;
 import android.util.Log;
 
 import com.cloudspace.rosserial_java.BinaryUtils;
@@ -44,7 +45,6 @@ import org.ros.node.ConnectedNode;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Timer;
 
 import rosserial_msgs.TopicInfo;
 
@@ -58,12 +58,6 @@ public class ROSSerial implements Runnable {
      * Flags for marking beginning of packet transmission
      */
     public static final byte[] FLAGS = {(byte) 0xff, (byte) 0xfd};
-
-    /**
-     * Maximum size for the incomming message data in bytes
-     * Same as Message out buffer size in rosserial_arduino
-     */
-    private static final int MAX_MSG_DATA_SIZE = 2048;
 
     /**
      * Output stream for the serial line used for communication.
@@ -86,6 +80,7 @@ public class ROSSerial implements Runnable {
     private Protocol protocol;
 
     private final Object lock = new Object();
+    Handler errorHandler;
 
     /**
      * Set a new topic registration listener for publications.
@@ -146,6 +141,7 @@ public class ROSSerial implements Runnable {
                 try {
                     ostream.write(packet);
                 } catch (Exception e) {
+                    ROSSerialADK.sendError(errorHandler, ROSSerialADK.ERROR_ACCESSORY_NOT_CONNECTED, e.getMessage());
                     e.printStackTrace();
                 }
             } else {
@@ -153,6 +149,8 @@ public class ROSSerial implements Runnable {
             }
         }
     };
+
+
 
     private byte[] generatePacket(byte[] data, int topicId) {
         int length = data.length;
@@ -183,12 +181,12 @@ public class ROSSerial implements Runnable {
 
     }
 
-    public ROSSerial(ConnectedNode nh, InputStream input, OutputStream output) {
+    public ROSSerial(Handler handler, ConnectedNode nh, InputStream input, OutputStream output) {
         ostream = output;
         istream = input;
         node = nh;
         protocol = new Protocol(node, sendHandler);
-
+        errorHandler = handler;
     }
 
     private byte[] data;
@@ -199,13 +197,6 @@ public class ROSSerial implements Runnable {
     public void shutdown() {
         running = false;
     }
-
-    /**
-     * This timer watches when a packet starts.  If the packet
-     * does not complete itself within 30 milliseconds
-     * the message is thrown away.
-     */
-    Timer packet_timeout_timer;
 
     /**
      * Start running the endpoint.
@@ -237,15 +228,18 @@ public class ROSSerial implements Runnable {
                 } catch (IOException e) {
                     node.getLog()
                             .error("Total IO Failure.  Now exiting ROSSerial iothread.");
+                    ROSSerialADK.sendError(errorHandler, ROSSerialADK.ERROR_ACCESSORY_NOT_CONNECTED, e.getMessage());
                     break;
                 } catch (Exception e) {
                     node.getLog().error("Unable to read input stream", e);
+                    ROSSerialADK.sendError(errorHandler, ROSSerialADK.ERROR_ACCESSORY_NOT_CONNECTED, e.getMessage());
                 }
                 try {
                     //Sleep prevents continuous polling of istream.
                     //continuous polling kills an inputstream on android
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
+                    ROSSerialADK.sendError(errorHandler, ROSSerialADK.ERROR_UNKNOWN, e.getMessage());
                     break;
                 }
             }

@@ -52,13 +52,13 @@ public class ROSSerialADKService extends Service {
             return adk;
         }
 
-        public ROSSerialADK setConnectedNode(ConnectedNode node, UsbAccessory accessory) {
+        public ROSSerialADK setConnectedNode(Handler errorHandler, ConnectedNode node, UsbAccessory accessory) {
             if (accessory == null) {
                 Toast.makeText(ROSSerialADKService.this, "NULL ACCESSORY", Toast.LENGTH_LONG).show();
                 return null;
             }
             nh = node;
-            adk = new ROSSerialADK(ROSSerialADKService.this, nh, accessory);
+            adk = new ROSSerialADK(errorHandler, ROSSerialADKService.this, nh, accessory);
             return adk;
         }
 
