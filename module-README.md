@@ -4,7 +4,7 @@ Android specific components of ROSSerial.
 ROSSerial is used to set up a bridge between the non network enabled Arduino, and the Ros connected Android device.
 
 Usage is as follows.
-`
+```
 try {
     adk = new ROSSerialADK(errorHandler, ExternalCoreActivity.this, connectedNode, mAccessory);
 } catch (Exception e) {
@@ -13,10 +13,10 @@ try {
 }
 adk.setOnSubscriptionCB(topicRegisteredListener);
 adk.setOnSubscriptionCB(topicRegisteredListener);
-`
+```
 
 Where errorHandler is null, or a Handler object setup to receive errors as follows
-`
+```
     Handler errorHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -55,7 +55,7 @@ Where errorHandler is null, or a Handler object setup to receive errors as follo
             }
         }
     };
-    `
+    ```
 
 =====
 
