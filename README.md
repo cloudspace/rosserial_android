@@ -55,7 +55,7 @@ Where errorHandler is null, or a Handler object setup to receive errors as follo
             }
         }
     };
-    ```
+```
 
 =====
 
