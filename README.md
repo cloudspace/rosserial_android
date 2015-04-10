@@ -1,4 +1,4 @@
-# ROSSerial Android
+# ROSSerial Android - https://github.com/cloudspace/rosserial_android
 Android specific components of ROSSerial.
 
 ROSSerial is used to set up a bridge between the non network enabled Arduino, and the Ros connected Android device.
