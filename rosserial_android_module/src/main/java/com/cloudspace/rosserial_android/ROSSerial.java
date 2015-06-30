@@ -151,7 +151,6 @@ public class ROSSerial implements Runnable {
     };
 
 
-
     private byte[] generatePacket(byte[] data, int topicId) {
         int length = data.length;
         byte tHigh = (byte) ((topicId & 0xFF00) >> 8);
@@ -217,20 +216,22 @@ public class ROSSerial implements Runnable {
                 try {
                     int bytes = istream.read(buffer);
                     if (bytes > 8 && packet_state == PACKET_STATE.FLAGA) {
+                        Log.d("GOT FLAG A", "STARTING PARSE");
                         data = new byte[(buffer[3] << 8) | (buffer[2])];
-                        int i = 0;
-                        for (i = 0; i < data.length + 8; i++) {
+                        for (int i = 0; i < data.length + 8; i++) {
                             handleByte(buffer[i]);
                         }
                     } else {
                         resetPacket();
                     }
                 } catch (IOException e) {
+                    e.printStackTrace();
                     node.getLog()
                             .error("Total IO Failure.  Now exiting ROSSerial iothread.");
                     ROSSerialADK.sendError(errorHandler, ROSSerialADK.ERROR_ACCESSORY_NOT_CONNECTED, e.getMessage());
                     break;
                 } catch (Exception e) {
+                    e.printStackTrace();
                     node.getLog().error("Unable to read input stream", e);
                     ROSSerialADK.sendError(errorHandler, ROSSerialADK.ERROR_ACCESSORY_NOT_CONNECTED, e.getMessage());
                 }
@@ -239,6 +240,7 @@ public class ROSSerial implements Runnable {
                     //continuous polling kills an inputstream on android
                     Thread.sleep(10);
                 } catch (InterruptedException e) {
+                    e.printStackTrace();
                     ROSSerialADK.sendError(errorHandler, ROSSerialADK.ERROR_UNKNOWN, e.getMessage());
                     break;
                 }
@@ -291,15 +293,7 @@ public class ROSSerial implements Runnable {
 
             case LENGTH_CHECKSUM:
                 data_len = (messageLengthBytes[1] << 8) | (messageLengthBytes[0]);
-                int dataChk = 255 - data_len % 256;
-                if ((byte) dataChk == b) {
-                    Log.d("Length chk succeeded!", BinaryUtils.byteToHexString(b));
-                    packet_state = PACKET_STATE.TOPIC_ID;
-                    byte_index = 0;
-                } else {
-                    Log.d("Length chk failed!", BinaryUtils.byteToHexString(b) + " : " + String.valueOf(dataChk));
-                    resetPacket();
-                }
+                packet_state = PACKET_STATE.TOPIC_ID;
                 break;
             case TOPIC_ID:
                 topicIdBytes[byte_index] = b;
@@ -317,25 +311,23 @@ public class ROSSerial implements Runnable {
                 }
                 break;
             case MSG_CHECKSUM:
-                int chk = 0;
+                int chk = (0xff & b);
                 for (int i = 0; i < 2; i++)
-                    chk += (int) (0xff & topicIdBytes[i]);
+                    chk += (0xff & topicIdBytes[i]);
                 for (int i = 0; i < data_len; i++) {
-                    chk += (int) (0xff & data[i]);
+                    chk += (0xff & data[i]);
                 }
 
-                if ((byte) chk == b) {
-                    resetPacket();
-                    Log.d("Msg checksum failed!", BinaryUtils.byteToHexString(b) + " : " + String.valueOf(chk));
+                Log.d("Msg checksum!", BinaryUtils.byteToHexString(b) + " : " + String.valueOf(BinaryUtils.byteToHexString((byte) chk)) + " : " + (chk % 256 != 255));
+
+                if ((chk % 256 != 255)) {
                     resetPacket();
                     return false;
                 } else {
-                    Log.d("Msg checksum succeeded!", BinaryUtils.byteToHexString(b));
+                    int topic_id = (topicIdBytes[1] << 8) | (topicIdBytes[0]);
+                    resetPacket();
+                    protocol.parsePacket(topic_id, data);
                 }
-
-                int topic_id = (topicIdBytes[1] << 8) | (topicIdBytes[0]);
-                protocol.parsePacket(topic_id, data);
-                resetPacket();
                 break;
         }
         return true;
